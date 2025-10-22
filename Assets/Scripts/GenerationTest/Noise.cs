@@ -5,7 +5,7 @@ public static class Noise
 {
     public enum NormalizeMode {Local, Global};
 
-    public static float[,] NoiseMapGeneration(int mapWidth, int mapHeight, MapNoiseSettings settings)
+    public static float[,] NoiseMapGeneration(int mapWidth, int mapHeight, MapNoiseSettings settings, Vector2 sampleCenter)
     {
         float[,] noiseMap = new float[mapWidth, mapHeight];
 
@@ -18,15 +18,13 @@ public static class Noise
 
         for (int i = 0; i < settings.octaves; i++)
         {
-            float offsetX = prng.Next(-100000, 100000) + settings.offset.x;
-            float offsetY = prng.Next(-100000, 100000) - settings.offset.y;
+            float offsetX = prng.Next(-100000, 100000) + settings.offset.x + sampleCenter.x;
+            float offsetY = prng.Next(-100000, 100000) - settings.offset.y + sampleCenter.y;
             octaveOffsets[i] = new Vector2(offsetX, offsetY);
 
             maxPossibleHeight += amplitude;
             amplitude *= settings.persistance;
         }
-
-        if (settings.scale <= 0) settings.scale = 0.0001f; // Clamps the scale if it's zero or less
 
         float maxLocalNoiseHeight = float.MinValue;
         float minLocalNoiseHeight = float.MaxValue;
@@ -53,28 +51,34 @@ public static class Noise
                     amplitude *= settings.persistance;
                     frequency *= settings.lacunarity;
                 }
+
                 if(noiseHeight > maxLocalNoiseHeight)
                 {
                     maxLocalNoiseHeight = noiseHeight;
-                } else if (noiseHeight < minLocalNoiseHeight)
+                }
+                
+                if (noiseHeight < minLocalNoiseHeight)
                 {
                     minLocalNoiseHeight = noiseHeight;
                 }
                     noiseMap[x, y] = noiseHeight;
-            }
-        }
 
-        for (int y = 0; y < mapHeight; y++)
-        {
-            for (int x = 0; x < mapWidth; x++)
-            {
-                if (settings.normalizeMode == NormalizeMode.Local)
-                {
-                    noiseMap[x, y] = Mathf.InverseLerp(minLocalNoiseHeight, maxLocalNoiseHeight, noiseMap[x, y]); // Prefered way of creating noise unless making infinite terrain
-                } else
+                if(settings.normalizeMode == NormalizeMode.Global)
                 {
                     float normalizedHeight = (noiseMap[x, y] + 1) / (maxPossibleHeight);
                     noiseMap[x, y] = Mathf.Clamp(normalizedHeight, 0, int.MaxValue);
+                }
+            }
+        }
+
+        if (settings.normalizeMode == NormalizeMode.Local)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                for (int x = 0; x < mapWidth; x++)
+                {
+
+                    noiseMap[x, y] = Mathf.InverseLerp(minLocalNoiseHeight, maxLocalNoiseHeight, noiseMap[x, y]); // Prefered way of creating noise unless making infinite terrain
                 }
             }
         }

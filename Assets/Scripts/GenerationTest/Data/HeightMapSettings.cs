@@ -30,15 +30,7 @@ public class HeightMapSettings : UpdateableData
 
     protected override void OnValidate()
     {
-        if (lacunarity < 1)
-        {
-            lacunarity = 1;
-        }
-
-        if (octaves < 0)
-        {
-            octaves = 0;
-        }
+        noiseSettings.ValidateValues();
 
         base.OnValidate();
     }

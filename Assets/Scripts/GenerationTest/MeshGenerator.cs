@@ -2,17 +2,9 @@ using UnityEngine;
 
 public static class MeshGenerator
 {
-    public const int numSupportedLODs = 5;
-    public const int numSupportedChunkSizes = 9;
-    public const int numSupportedFlatshadedChunkSizes = 3;
 
-    public static readonly int[] supportedChunkSizes = { 48, 72, 96, 120, 144, 168, 192, 216, 240 };
-    public static readonly int[] supportedFlatshadedChunkSizes = { 48, 72, 96 };
-
-    public static MeshData GenerateTerrainMesh(float[,] heightMap, float heightMulti, AnimationCurve heightCurve1, int levelOfDetail, bool useFlatShading)
+    public static MeshData GenerateTerrainMesh(float[,] heightMap, MeshSettings meshSettings, int levelOfDetail)
     {
-        AnimationCurve heightCurve = new AnimationCurve(heightCurve1.keys);
-
         int meshSimplifyIncrement = (levelOfDetail == 0) ? 1 : levelOfDetail * 2;
 
         int borderedSize = heightMap.GetLength(0);
@@ -24,7 +16,7 @@ public static class MeshGenerator
 
         int verticesPerLine = (meshSize - 1) / meshSimplifyIncrement + 1;
 
-        MeshData meshData = new MeshData(verticesPerLine, useFlatShading);
+        MeshData meshData = new MeshData(verticesPerLine, meshSettings.useFlatShading);
 
         int[,] vertexIndicesMap = new int[borderedSize, borderedSize];
         int meshVertexIndex = 0;
@@ -55,8 +47,8 @@ public static class MeshGenerator
                 int vertexIndex = vertexIndicesMap[x,y];
                 Vector2 percent = new Vector2((x - meshSimplifyIncrement) / (float)meshSize, (y - meshSimplifyIncrement) / (float)meshSize);
 
-                float height = heightCurve.Evaluate(heightMap[x, y]) * heightMulti;
-                Vector3 vertexPosition = new Vector3(topLeftX + percent.x * meshSizeUnsimplify, height, topLeftZ - percent.y * meshSizeUnsimplify);
+                float height = heightMap[x, y];
+                Vector3 vertexPosition = new Vector3((topLeftX + percent.x * meshSizeUnsimplify) * meshSettings.meshScale, height, (topLeftZ - percent.y * meshSizeUnsimplify) * meshSettings.meshScale);
 
                 meshData.AddVertex(vertexPosition, percent, vertexIndex);
 
@@ -75,7 +67,7 @@ public static class MeshGenerator
             }
         }
 
-        meshData.Finalize();
+        meshData.FinalizeIt();
 
         return meshData;
     }
@@ -198,7 +190,7 @@ public class MeshData
         return Vector3.Cross(sideAB, sideAC).normalized;
     }
 
-    public void Finalize()
+    public void FinalizeIt()
     {
         if (useFlatShading)
         {
