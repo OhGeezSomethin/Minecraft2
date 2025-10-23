@@ -70,7 +70,7 @@ public static class MeshGenerator
 
                     meshData.AddVertex(new Vector3(vertexPosition2D.x, height, vertexPosition2D.y), percent, vertexIndex);
 
-                    bool createTriangle = x < numVerticesPerLine - 1 && y < numVerticesPerLine - 1 && (!isEdgeConnectionVertex) || (x != 2 && y != 2);
+                    bool createTriangle = x < numVerticesPerLine - 1 && y < numVerticesPerLine - 1 && (!isEdgeConnectionVertex || (x != 2 && y != 2));
 
                     if (createTriangle)
                     {
@@ -122,7 +122,7 @@ public class MeshData
         uvs = new Vector2[vertices.Length];
 
         int numMeshEdgeTriangles = 8 * (numVerticesPerLine - 4);
-        int numTotalMainTriangles = (numVerticesPerLine - 1) * (numVerticesPerLine - 1) * 2;
+        int numTotalMainTriangles = (numMainVerticesPerLine - 1) * (numMainVerticesPerLine - 1) * 2;
         triangles = new int[(numMeshEdgeTriangles + numTotalMainTriangles) * 3];
 
         outOfMeshVertices = new Vector3[numVerticesPerLine * 4 - 4];
