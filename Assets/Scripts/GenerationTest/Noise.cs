@@ -19,7 +19,7 @@ public static class Noise
         for (int i = 0; i < settings.octaves; i++)
         {
             float offsetX = prng.Next(-100000, 100000) + settings.offset.x + sampleCenter.x;
-            float offsetY = prng.Next(-100000, 100000) - settings.offset.y + sampleCenter.y;
+            float offsetY = prng.Next(-100000, 100000) - settings.offset.y - sampleCenter.y;
             octaveOffsets[i] = new Vector2(offsetX, offsetY);
 
             maxPossibleHeight += amplitude;

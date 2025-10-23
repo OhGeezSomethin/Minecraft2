@@ -67,7 +67,7 @@ Shader "Custom/Terrain"
                 float drawStrength = inverseLerp(-baseBlends[i] / 2 - epsilon, baseBlends[i] / 2, heightPercent - baseStartHeights[i]);
 
                 float3 baseColor = baseColors[i] * baseColorStrength[i];
-                float3 textureColor = triplanar(IN.worldPos, baseTextureScales[i], blendAxes, i) * (1 - baseColorStrength[i])
+                float3 textureColor = triplanar(IN.worldPos, baseTextureScales[i], blendAxes, i) * (1 - baseColorStrength[i]);
 
                 o.Albedo = o.Albedo * (1 - drawStrength) + (baseColor + textureColor) * drawStrength;
                 }

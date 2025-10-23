@@ -16,14 +16,12 @@ public class MeshSettings : UpdateableData
     [Range(0, numSupportedChunkSizes - 1)] public int chunkSizeIndex;
     [Range(0, numSupportedFlatshadedChunkSizes - 1)] public int flatshadedChunkSizeIndex;
 
-    [Range(0, numSupportedLODs - 1)] public int previewLevelOfDetail;
-
     // Number of vertices per line (with mesh rendered at LOD of zero). Includes 2 extra vertices used for normals calculations
     public int numVerticesPerLine
     {
         get
         {
-            return supportedChunkSizes[(useFlatShading)?flatshadedChunkSizeIndex:chunkSizeIndex] + 1;
+            return supportedChunkSizes[(useFlatShading)?flatshadedChunkSizeIndex:chunkSizeIndex] + 5;
         }
     }
 

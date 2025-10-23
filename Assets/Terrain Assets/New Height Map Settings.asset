@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a81ccb8603b59b4388ba7f0774d5f2e, type: 3}
   m_Name: New Height Map Settings
   m_EditorClassIdentifier: 
-  autoUpdate: 0
+  autoUpdate: 1
   noiseSettings:
-    normalizeMode: 0
+    normalizeMode: 1
     scale: 50
     octaves: 4
     persistance: 0.5
@@ -22,10 +22,46 @@ MonoBehaviour:
     seed: 0
     offset: {x: 0, y: 0}
   useFalloff: 0
-  heightMulti: 0
+  heightMulti: 20
   heightCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.002532959
+      value: -0.01663208
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.8303808
+      value: 0.9580425
+      inSlope: 1.993025
+      outSlope: 1.993025
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.16738062
+    - serializedVersion: 3
+      time: 0.95204306
+      value: 1.0069442
+      inSlope: 0.05457881
+      outSlope: 0.05457881
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.25491777
+      outWeight: 0.44266975
+    - serializedVersion: 3
+      time: 1.0279877
+      value: 1.0023241
+      inSlope: -0.000042537322
+      outSlope: -0.000042537322
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.5992895
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

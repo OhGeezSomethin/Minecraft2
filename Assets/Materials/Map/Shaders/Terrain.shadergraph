@@ -203,6 +203,9 @@
         },
         {
             "m_Id": "96bce314f28248b5a087897184399c06"
+        },
+        {
+            "m_Id": "3d8352e39f8a4039b94027c29f7c9db9"
         }
     ],
     "m_GroupDatas": [
@@ -2413,12 +2416,50 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.UVNode",
+    "m_ObjectId": "3d8352e39f8a4039b94027c29f7c9db9",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "UV",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -503.99993896484377,
+            "y": -411.0,
+            "width": 207.99993896484376,
+            "height": 311.9999694824219
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "bbf4134332ac498e83b244912fadaf8d"
+        }
+    ],
+    "synonyms": [
+        "texcoords",
+        "coords",
+        "coordinates"
+    ],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_OutputChannel": 0
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.GroupData",
     "m_ObjectId": "3d92d97d44744b65ab144108a0caeb61",
     "m_Title": "Granite - Gneiss",
     "m_Position": {
         "x": 272.0,
-        "y": 2011.0
+        "y": 2010.9998779296875
     }
 }
 
@@ -2518,10 +2559,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -254.9999542236328,
-            "y": -373.9999694824219,
-            "width": 207.99996948242188,
-            "height": 313.99993896484377
+            "x": -415.0,
+            "y": -765.9999389648438,
+            "width": 207.99993896484376,
+            "height": 313.9999694824219
         }
     },
     "m_Slots": [
@@ -2996,7 +3037,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Smoothness",
     "m_StageCapability": 2,
-    "m_Value": 0.5,
+    "m_Value": 0.25,
     "m_DefaultValue": 0.5,
     "m_Labels": []
 }
@@ -4973,6 +5014,31 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "bbf4134332ac498e83b244912fadaf8d",
+    "m_Id": 0,
+    "m_DisplayName": "Out",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "bca576e4985d428d81c30aa0415b6a49",
     "m_Id": 3,
@@ -5613,7 +5679,7 @@
     "m_Title": "Water - Sand",
     "m_Position": {
         "x": 318.0,
-        "y": -385.0
+        "y": -385.0000305175781
     }
 }
 
@@ -6064,7 +6130,7 @@
     "m_ObjectId": "e7eb380a343f435691afb581014cae15",
     "m_Title": "Grass - Granite",
     "m_Position": {
-        "x": 242.0,
+        "x": 241.99998474121095,
         "y": 1444.0
     }
 }
