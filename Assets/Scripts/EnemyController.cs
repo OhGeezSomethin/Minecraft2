@@ -1,22 +1,20 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private Transform target;
-    private Rigidbody enemyRb;
-
-    [SerializeField] private float speed = 0.4f;
+    private GameObject target;
+    private NavMeshAgent agent;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        enemyRb = GetComponent<Rigidbody>();
+        target = GameObject.Find("Target");
+        agent = GetComponent<NavMeshAgent>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        Vector3 direction = target.position - transform.position;
-        Vector3 nextPosition = transform.position + direction * speed * Time.fixedDeltaTime;
-        enemyRb.MovePosition(nextPosition);
+        agent.SetDestination(target.transform.position);
     }
 }

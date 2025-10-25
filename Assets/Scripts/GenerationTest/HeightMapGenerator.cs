@@ -19,17 +19,28 @@ public static class HeightMapGenerator
         float minValue = float.MaxValue;
         float maxValue = float.MinValue;
 
+        float centerThreshold = 1f;
+
         for(int i = 0; i < width; i++)
         {
             for(int j = 0; j < height; j++)
             {
-                if (settings.useFalloff) values[i, j] = Mathf.Clamp01(values[i, j] - falloffMap[i, j]);
+                if (settings.useFalloff && settings.noiseSettings.normalizeMode == Noise.NormalizeMode.Local)
+                {
+                    if (sampleCenter.magnitude < centerThreshold)
+                    {
+                        values[i, j] = Mathf.Clamp01(values[i, j] - falloffMap[i, j]);
+                    }
+                    else
+                    {
+                        values[i, j] = 0f; // Flattens chunks into water around the starting chunk
+                    }
+                }
 
-                values[i,j] *= heightCurve_threadsafe.Evaluate(values[i,j]) * settings.heightMulti;
+                values[i, j] *= heightCurve_threadsafe.Evaluate(values[i, j]) * settings.heightMulti;
 
-                if(values[i,j] > maxValue) maxValue = values[i,j];
-
-                if(values[i,j] < minValue) minValue = values[i,j];
+                if (values[i, j] > maxValue) maxValue = values[i, j];
+                if (values[i, j] < minValue) minValue = values[i, j];
             }
         }
 

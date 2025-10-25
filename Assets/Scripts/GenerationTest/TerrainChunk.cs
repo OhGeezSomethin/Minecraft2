@@ -1,4 +1,6 @@
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class TerrainChunk
 {
@@ -13,6 +15,7 @@ public class TerrainChunk
     MeshRenderer meshRenderer;
     MeshFilter meshFilter;
     MeshCollider meshCollider;
+    NavMeshSurface navMeshSurface;
 
     HeightMap heightMap;
     bool heightMapReceived;
@@ -47,6 +50,9 @@ public class TerrainChunk
         meshFilter = meshObj.AddComponent<MeshFilter>();
         meshCollider = meshObj.AddComponent<MeshCollider>();
         meshRenderer.material = material;
+
+        navMeshSurface = meshObj.AddComponent<NavMeshSurface>();
+        navMeshSurface.layerMask = LayerMask.GetMask("Default");
 
         meshObj.transform.position = new Vector3(position.x, 0, position.y);
         meshObj.transform.parent = parent;
@@ -118,6 +124,10 @@ public class TerrainChunk
                     {
                         previousLODIndex = lodIndex;
                         meshFilter.mesh = lodMesh.mesh;
+                        
+                        navMeshSurface.RemoveData();
+                        navMeshSurface.BuildNavMesh();
+                        Debug.Log("Baked Navmesh!");
                     }
                     else if (!lodMesh.hasRequestedMesh)
                     {
