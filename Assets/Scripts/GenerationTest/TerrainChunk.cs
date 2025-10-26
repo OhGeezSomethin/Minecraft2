@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -124,10 +125,6 @@ public class TerrainChunk
                     {
                         previousLODIndex = lodIndex;
                         meshFilter.mesh = lodMesh.mesh;
-                        
-                        navMeshSurface.RemoveData();
-                        navMeshSurface.BuildNavMesh();
-                        Debug.Log("Baked Navmesh!");
                     }
                     else if (!lodMesh.hasRequestedMesh)
                     {

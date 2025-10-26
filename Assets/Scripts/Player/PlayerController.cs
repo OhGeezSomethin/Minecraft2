@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    private PlayerStats playerStats;
     private CharacterController characterController;
     private Rigidbody playerRb;
 
@@ -15,12 +16,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform camTransform;
 
     [Header("Movement")]
-    [SerializeField] private float moveSpeed = 6f;
-    [SerializeField] private float smoothTime = 0.05f;
+    [SerializeField] private float smoothTime = 0.05f; // Camera movement
 
     [Header("Gravity")]
-    [SerializeField] private float gravityMulti = 3f;
-    [SerializeField] private float jumpStrength = 8f;
+    [SerializeField] private float gravityMulti = 1f;
 
     public InputAction moveAction;
     public InputAction jumpAction;
@@ -73,7 +72,7 @@ public class PlayerController : MonoBehaviour
                 verticalVelocity = -1f;
 
             if (jumpAction.triggered)
-                verticalVelocity = jumpStrength;
+                verticalVelocity = playerStats.jumpStrength;
         }
         else
         {
@@ -81,7 +80,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Apply movement and gravity
-        Vector3 velocity = moveDirection * moveSpeed;
+        Vector3 velocity = moveDirection * playerStats.moveSpeed;
         velocity.y = verticalVelocity;
 
         characterController.Move(velocity * Time.deltaTime);
