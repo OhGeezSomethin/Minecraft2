@@ -9,6 +9,8 @@ public class ExperienceGraph : MonoBehaviour
     
     private Image fill;
     private TextMeshProUGUI levelTxt;
+    private PlayerStats playerStats;
+    private HealthBar healthBar;
 
     private int currentLvl = 0;
     private int totalXp = 0;
@@ -19,7 +21,8 @@ public class ExperienceGraph : MonoBehaviour
     {
         fill = GetComponent<Image>();
         levelTxt = GameObject.Find("Level").GetComponent<TextMeshProUGUI>();
-    }
+        playerStats = GameObject.Find("Target").GetComponent<PlayerStats>();
+        }
 
     void Update()
     {
@@ -52,12 +55,27 @@ public class ExperienceGraph : MonoBehaviour
         if (nextLvl != currentLvl)
         {
             currentLvl = nextLvl;
+            ApplyRandomStatBoost();
             UpdateLevel();
         }
 
         float prevXp = xpCurve.Evaluate(currentLvl);
         float nextXp = xpCurve.Evaluate(currentLvl + 1);
         fill.fillAmount = Mathf.InverseLerp(prevXp, nextXp, totalXp);
+    }
+
+    void ApplyRandomStatBoost()
+    {
+        float healthBoost = Random.Range(1f, 3f);
+        float defenseBoost = Random.Range(0.1f, 0.3f);
+        float speedBoost = Random.Range(0.05f, 0.06f);
+
+        playerStats.maxHealth += healthBoost;
+        playerStats.defense += defenseBoost;
+        playerStats.moveSpeed += speedBoost;
+
+        playerStats.currentHealth = playerStats.maxHealth;
+        Debug.Log("Applied: +{healthBoost:F1} HP, +{defenseBoost:F1} DEF +{speedBoost:F2} SPD");
     }
 
     void UpdateLevel()
