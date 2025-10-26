@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         playerRb = GetComponent<Rigidbody>();
+        playerStats = GetComponent<PlayerStats>();
     }
 
     void Start()
