@@ -5,51 +5,100 @@ using UnityEngine.InputSystem;
 
 public class ButtonInteraction : MonoBehaviour
 {
-    [SerializeField] private UnityEvent whenPressed;
-    //[SerializeField] private Animator buttonAnimator;
+    //[SerializeField] private UnityEvent whenPressed;
 
-    public AudioSource buttonPressSound;
+    protected bool isPressed;
+    protected bool isReleased;  
 
-    public bool isPressed;
+    protected KeyCode interactkey;
 
-    public EquipmentItem itemCurrent;
+    IInteractable interactable;
 
-    public InputAction interactAction;
-
-    //public InputAction chimeAction;
+    public ButtonInteraction(KeyCode ik)
+    {
+        interactkey = ik;
+    }
 
     void Awake()
     {
-        buttonPressSound = GetComponent<AudioSource>();
-        itemCurrent = GetComponent<EquipmentItem>();
+        isPressed = false;
+        isReleased = false;
+        interactable = GetComponent<IInteractable>();
+    }
+
+    public void setPressFalse()
+    {
         isPressed = false;
     }
 
-    public void OnEnable()
+    public void setPressTrue()
     {
-        interactAction.Enable();
+        isPressed = true;
     }
 
-    public void OnDisable()
+    public void setKey(KeyCode key)
     {
-        interactAction.Disable();
+        interactkey = key;
     }
 
-    private void Update()
+    public KeyCode getKey()
     {
-        if (!isPressed)
-        {
-            isPressed = interactAction.IsPressed();
-        }
-        else
-        {
-            Debug.Log("Button pressed.");
+        return interactkey;
+    }
 
-            whenPressed.Invoke();
-            Debug.Log("Script ran.");
+    void Update()
+    {
+        if (isReleased)
+        {
+            interactable.Interact();
+            Debug.Log("Script started.");
+            isReleased = false;
             isPressed = false;
         }
+        else if (Input.GetKeyDown(interactkey))
+        {
+            isPressed = true;
+            Debug.Log("Button pressed and trap sprung.");
+            //return;
+        }
+        else if(!Input.GetKeyDown(interactkey) && isPressed)
+        {
+            isReleased = true;
+            Debug.Log("Button released.");
+            //return;
+        }
+
+        ////Start interact on key release
+        //if (!isPressed && isReleased)
+        //{
+        //    interactable.Interact();
+        //    Debug.Log("Script started.");
+        //    isReleased = false;
+        //    return;
+        //}
+
+        //if (!Input.GetKeyDown(interactkey) && isPressed)
+        //{
+        //    isReleased = true;
+        //    isPressed = false;
+        //    return;
+
+        //    //interactable.Interact();
+        //    //Debug.Log("Script started.");
+
+        //}
+
+        //if (Input.GetKeyDown(interactkey) && !isPressed)
+        //{
+        //    isPressed = true;
+        //    Debug.Log("Button pressed and toggle sprung.");
+        //    return;
+        //}
+
+        //isPressed = false;
     }
+
+
 
 
 }

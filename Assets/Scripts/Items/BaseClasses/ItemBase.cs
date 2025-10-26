@@ -2,7 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ItemBase", menuName = "Scriptable Objects/ItemBase")]
-public class ItemBase : MonoBehaviour
+public class ItemBase : ScriptableObject
 {
     protected string descript;
     protected string rarety;

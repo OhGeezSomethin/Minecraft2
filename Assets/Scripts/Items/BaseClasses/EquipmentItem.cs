@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EquipmentItem", menuName = "Scriptable Objects/EquipmentItem")]
@@ -7,21 +8,26 @@ public class EquipmentItem : ItemBase
     float dmg_multi;
     float health_flat;
     float regen;
+    //private GameObject curObj;
+    private AudioSource buttonPressSound;
 
     public EquipmentItem()
     {
         dmg_flat = 0;
         dmg_multi = 1;
         health_flat = 0;
-        regen = 0;  
+        regen = 0;
+        //curObj = GameObject.Find("Sword");
+        buttonPressSound = null;
     }
 
-    public EquipmentItem(float df, float dm, float hf, float regn, string desc, string rar, string tp) : base(desc, rar, tp)
+    public EquipmentItem(float df, float dm, float hf, float regn, string desc, string rar, string tp, AudioSource buttonPS) : base(desc, rar, tp)
     {
         dmg_flat = df;
         dmg_multi = dm;
         health_flat = hf;
         regen = regn;
+        buttonPressSound = buttonPS;
     }
 
     public void setdmgF(float val)
@@ -61,5 +67,20 @@ public class EquipmentItem : ItemBase
     public float getRegen()
     {
         return regen;
+    }
+
+    public void setButtonAudio(AudioSource buttonAudio)
+    {
+        buttonPressSound = (buttonAudio != null) ? buttonAudio : null;
+    }
+
+    public AudioSource getButtonAudio()
+    {
+        return buttonPressSound;
+    }
+
+    public void playButtonAudio()
+    {
+        buttonPressSound.Play();
     }
 }
